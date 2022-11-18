@@ -43,7 +43,7 @@ void setup(){
   config.database_url = DATABASE_URL;
 
   /* Sign up */
-  if (Firebase.signUp(&config, &auth, "", "")){
+  if (Firebase.begin(&config,&auth)){
     Serial.println("ok");
     signupOK = true;
   }
@@ -61,19 +61,14 @@ void setup(){
 void loop()
 { float moisture_percentage;
   moisture_percentage = ( 100.00 - ( (analogRead(sensor_pin)/1023.00) * 100.00 ) );
+
   if (Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 9000 || sendDataPrevMillis == 0))
   {
     sendDataPrevMillis = millis();
 
-    if (Firebase.RTDB.setFloat(&Reading, "Soil Moisture(in Percentage) = ", moisture_percentage))
-    {
-      Serial.println("PASSED");
-      Serial.println("Soil Moisture(in Percentage) = ");
-      Serial.println(Firebase.RTDB.getFloat(&Reading, "Soil Moisture(in Percentage) = "));
-    }
-    else
-    {
-      Serial.println("FAILED");
-    }
+    Firebase.RTDB.setFloat(&Reading, "Soil Moisture(in Percentage) = ", moisture_percentage)
+    Serial.println("Soil Moisture(in Percentage) = ");
+    Serial.println(Firebase.RTDB.getFloat(&Reading, "Soil Moisture(in Percentage) = "));
+    
   }
 }
