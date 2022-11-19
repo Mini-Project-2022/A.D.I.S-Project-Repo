@@ -1,0 +1,12 @@
+Battery Calculations:
+
+Consumption-
+1.Node MCU= 80mA/h
+2.Soil Moisture sensor=approx 20mA/h
+
+Total consumption=(80+25)mA/h=approx 100mA/h
+
+Average Capacity of unit AA Battery=800mA/h
+Capacity of 4xAA Batteries=(800*4)mA/h=3200mA/h
+
+Estimated Runtime of sensing system=(3200/100)hrs= Approx 32 Hours 
