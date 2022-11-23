@@ -26,8 +26,6 @@ void setup()
   Serial.begin(9600);
   Blynk.begin(auth, ssid, pass);
   pinMode(sensorPin, INPUT);
-  Serial.begin(9600);
-  Blynk.begin(auth, ssid, pass, BLYNK_TEMPLATE_ID);
 }
 
 
