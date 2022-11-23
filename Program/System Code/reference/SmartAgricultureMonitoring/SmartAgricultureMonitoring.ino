@@ -7,6 +7,10 @@
 #include <BlynkSimpleEsp8266.h>
 #define BLYNK_PRINT Serial
 
+#define BLYNK_TEMPLATE_ID "TMPLf1QaRqTe"
+#define BLYNK_DEVICE_NAME "Irrigation System"
+#define BLYNK_AUTH_TOKEN "AMXAWQuF-uGVemwkc9BEH4dwXbw33cwh"
+
 char auth[] = "AMXAWQuF-uGVemwkc9BEH4dwXbw33cwh";               //Authentication code sent by Blynk
 char ssid[] = "Joshi -5G";                        //WiFi SSID
 char pass[] = "123456789";                        //WiFi Password
@@ -23,7 +27,7 @@ void setup()
   Blynk.begin(auth, ssid, pass);
   pinMode(sensorPin, INPUT);
   Serial.begin(9600);
-  Blynk.begin(auth, ssid, pass);
+  Blynk.begin(auth, ssid, pass, BLYNK_TEMPLATE_ID);
 }
 
 
