@@ -4,7 +4,7 @@
 const char* ssid = "ADIS_Sensor_Unit";
 const char* password = "miniproject@team1";
 
-const int sensor_pin = A0;
+const int sensor_pin = 0;
 // const float moisturelevel[];
 AsyncWebServer server(80);
 
@@ -15,7 +15,7 @@ String readmoisture()
 void setup()
 {
 
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println();
   
 
@@ -32,20 +32,25 @@ void setup()
   {
     request->send_P(200, "text/plain", readmoisture().c_str());
   });
-  if(readmoisture().toFloat()>=50.0)
-  {
-    server.on("/valvestatus", HTTP_GET,[](AsyncWebServerRequest *request)
+
+  server.on("/valvestatus", HTTP_GET,[](AsyncWebServerRequest *request)
+    {
+      if(readmoisture().toFloat()<50.0)
       {
         request->send_P(200, "text/plain", "ON");
-      });    
-  }  
-  else
-  {
-     server.on("/valvestatus", HTTP_GET,[](AsyncWebServerRequest *request)
+      }
+      else
       {
         request->send_P(200, "text/plain", "OFF");
-      });   
-  }  
+      }
+    });     
+  // else if()
+  // {
+  //    server.on("/valvestatus", HTTP_GET,[](AsyncWebServerRequest *request)
+  //     {
+  //       request->send_P(200, "text/plain", "ON");
+  //     });   
+  // }  
   server.begin();  
   
 }   
