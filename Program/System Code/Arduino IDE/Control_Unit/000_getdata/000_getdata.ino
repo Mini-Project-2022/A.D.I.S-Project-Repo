@@ -10,6 +10,7 @@ const char* ssid = "G";             // --> wifi name
 const char* password = "12345678";  //--> wifi password
 
 const char *host = "https://domestic-irrigation.000webhostapp.com:80/";
+
 String inString = "";
 void setup() {
   Serial.begin(115200);
@@ -21,7 +22,7 @@ void setup() {
 
   pinMode(ON_Board_LED, OUTPUT);
   digitalWrite(ON_Board_LED, HIGH);
-
+  pinMode(D3, OUTPUT);
   pinMode(D0, OUTPUT);
   digitalWrite(D0, LOW);
   Serial.print("Connecting");
@@ -60,7 +61,14 @@ void loop() {
   Serial.println(httpCodeGet);
   Serial.print("Returned data from Server : ");
   Serial.println(payloadGet);
-  
+  if(payloadGet[0]=='0')
+  {   
+    digitalWrite(D3, LOW);  
+  }
+  else if(payloadGet[0]=='1')
+  {
+    digitalWrite(D3, HIGH);     
+  }
   Serial.println("----------------Closing Connection----------------");
   http.end();
   Serial.println();
