@@ -5,8 +5,8 @@
 #include <ESP8266WiFiMulti.h>
 ESP8266WiFiMulti WiFiMulti;
 
-const char* ssid = "ADIS_Sensor_Unit";
-const char* password = "miniproject@team1";
+const char* ssid = "G";             // --> wifi name
+const char* password = "12345678";  //--> wifi password
 
 const char* moistureserver = "http://192.168.4.1/moisturelevel";
 const char* statusserver = "http://192.168.4.1/valvestatus";

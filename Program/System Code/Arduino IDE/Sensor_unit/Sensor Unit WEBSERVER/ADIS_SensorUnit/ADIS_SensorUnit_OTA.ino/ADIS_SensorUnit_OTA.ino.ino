@@ -2,8 +2,8 @@
 #include <ESP8266WiFi.h>
 #include "ESPAsyncWebServer.h"
 
-const char* ssid = "ADIS_Sensor_Unit";
-const char* password = "miniproject@team1";
+const char* ssid = "G";             // --> wifi name
+const char* password = "12345678";  //--> wifi password
 
 const int sensor_pin = 0;
 // const float moisturelevel[];
