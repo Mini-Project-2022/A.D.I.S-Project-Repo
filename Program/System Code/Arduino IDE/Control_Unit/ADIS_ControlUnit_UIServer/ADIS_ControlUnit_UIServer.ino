@@ -1,3 +1,6 @@
+#include <HttpClient.h>
+#include <b64.h>
+
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
@@ -28,9 +31,17 @@ char* valvestate_UI;
 AsyncWebServer server(80);
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println();
-
+  Serial.print("Setting AP (Access Point)…");
+  WiFi.softAP(server_ssid, server_password);
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(IP); 
+  server.on("/", HTTP_GET,[](AsyncWebServerRequest *request)
+  {
+    request->send_P(200, "text/plain",updateuipage().c_str());
+  });
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
@@ -40,6 +51,13 @@ void setup() {
   }
   Serial.println("");
   Serial.println("Connected to WiFi");
+  Serial.println();
+  // soilmoisture_UI=soilmoisture;
+  // valvestate_UI=valvestate;      
+  
+  AsyncElegantOTA.begin(&server);  
+  server.begin(); 
+
 }
 
 void loop()
@@ -54,18 +72,7 @@ void loop()
       valvestate = httpGETRequest(statusserver);
       Serial.println("Soil Moisture Level: " + soilmoisture + " %");
       Serial.println("Valve State: " + valvestate);
-      Serial.println();
-      // soilmoisture_UI=soilmoisture;
-      // valvestate_UI=valvestate;      
-      Serial.print("Setting AP (Access Point)…");
-      WiFi.softAP(server_ssid, server_password);
-      IPAddress IP = WiFi.softAPIP();
-      Serial.print("AP IP address: ");
-      Serial.println(IP); 
-      server.on("/", HTTP_GET,[](AsyncWebServerRequest *request)
-      {
-        request->send_P(200, "text/plain",updateuipage().c_str());
-      });
+      
          
       previousMillis = currentMillis;
     }
@@ -73,28 +80,27 @@ void loop()
       Serial.println("WiFi Disconnected");
     }
   }
-  AsyncElegantOTA.begin(&server);  
-  server.begin();  
+   
 }
 String updateuipage()
 {
-  return String("Moisture Level: "+String(soilmoisture)+" %"+"/nValve Status: "+String(valvestate));
+  return String("Moisture Level: "+String(soilmoisture)+" %"+" Valve Status: "+String(valvestate));
 }
 String httpGETRequest(const char* serverName) 
 {
   WiFiClient client;
   HTTPClient http;
-  http.begin(client, serverName);
+  http.begin(client,serverName);
   
-  int httpResponseCode = http.GET();
-  
-  String payload = "--"; 
-  
+  int httpResponseCode = http.GET(); 
+  // int httpResponseCode =1; 
+  String payload= "--";
   if (httpResponseCode>0) 
   {
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
     payload = http.getString();
+    Serial.println(payload);
   }
   else 
   {

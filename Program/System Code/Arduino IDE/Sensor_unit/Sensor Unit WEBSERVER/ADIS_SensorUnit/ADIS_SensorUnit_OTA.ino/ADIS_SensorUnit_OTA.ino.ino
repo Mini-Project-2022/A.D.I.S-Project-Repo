@@ -27,7 +27,7 @@ void setup()
   IPAddress IP = WiFi.softAPIP();
   Serial.print("AP IP address: ");
   Serial.println(IP);
-
+  
     
   server.on("/moisturelevel", HTTP_GET,[](AsyncWebServerRequest *request)
   {
@@ -36,7 +36,7 @@ void setup()
 
   server.on("/valvestatus", HTTP_GET,[](AsyncWebServerRequest *request)
     {
-      if(readmoisture().toFloat()<50.0)
+      if(readmoisture().toFloat()<40.0)
       {
         request->send_P(200, "text/plain", "ON");
       }
@@ -58,5 +58,5 @@ void setup()
 }   
 void loop()
 {
- 
+ Serial.println("Moisture Level: "+ readmoisture());
 } 
