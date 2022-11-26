@@ -5,7 +5,8 @@
 WiFiClient wifiClient;
 
 #define ON_Board_LED 2
-#define Valve_pin 4
+// #define Valve_pin D7
+const int Valve_pin = 13;
 
 const char* ssid = "G";             // --> wifi name
 const char* password = "12345678";  //--> wifi password
@@ -60,30 +61,50 @@ void loop() {
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   int httpCodeGet = http.POST(getData);
   String payloadGet = http.getString();
-  if(payloadGet.indexOf('0')==0)
-  {   
-    digitalWrite(Valve_pin, LOW); 
-    Serial.println("Valve OFF");
-  }
-  else if(payloadGet.indexOf('1')==0)
-  {
-    digitalWrite(Valve_pin, HIGH);
-    Serial.println("Valve ON");     
-  }
-  Serial.print("Response Code : ");
+    Serial.print("Response Code : ");
   Serial.println(httpCodeGet);
   Serial.print("Returned data from Server : ");
   Serial.println(payloadGet);
-  // if(payloadGet[0]=='0')
+  String Status = payloadGet.substring(0, payloadGet.indexOf(","));
+  Serial.println(Status);
+  // char valveactuate= payloadGet[1];
+  // Serial.print(payloadGet[0]);
+  // Serial.print("-");
+  // Serial.print(payloadGet[1]);
+  // Serial.print("-");
+  // Serial.print(payloadGet[2]);
+  // Serial.print("-");
+  // Serial.print(payloadGet[3]);
+  // Serial.print("-");
+  // Serial.println(payloadGet[4]);
+  // Serial.print("ValveStatus");
+  // Serial.println(valveactuate);
+  // if(payloadGet.indexOf('0')==0)
   // {   
   //   digitalWrite(Valve_pin, LOW); 
-  //   Serial.print("Valve OFF");
+  //   Serial.println("Valve OFF");
   // }
-  // else if(payloadGet[0]=='1')
+  // else if(payloadGet.indexOf('1')==0)
   // {
   //   digitalWrite(Valve_pin, HIGH);
-  //   Serial.print("Valve ON");     
+  //   Serial.println("Valve ON");     
   // }
+  // char t0='0';
+  // char t1='1';
+  // int payload_status=payloadGet[1] -'0';
+  // char payload_status[]=(payloadGet);
+  // Serial.println(payload_status[0]);
+  // Serial.println(payload_status[1]);
+  if(Status.indexOf('0')!=-1)
+  {   
+    digitalWrite(Valve_pin, HIGH); 
+    Serial.println("Valve OFF");
+  }
+  else if(Status.indexOf('1')!=-1)
+  {
+    digitalWrite(Valve_pin, LOW);
+    Serial.println("Valve ON");     
+  }
   Serial.println("----------------Closing Connection----------------");
   http.end();
   Serial.println();
