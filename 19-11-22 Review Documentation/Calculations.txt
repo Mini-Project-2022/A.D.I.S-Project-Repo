@@ -1,8 +1,8 @@
 Battery Calculations:
 
 Consumption-
-1.Node MCU= 80mA/h
-2.Soil Moisture sensor=approx 20mA/h
+1. Node MCU= 80mA/h
+2. Soil Moisture sensor=approx 20mA/h
 
 Total consumption=(80+25)mA/h=approx 100mA/h
 
@@ -16,15 +16,25 @@ Estimated Runtime of sensing system=(3200/120)hrs= Approx 26 Hours
 Adapter Sizing:
 
 Consumption-
-1.Node MCU= approx 0.6W
+1. Node MCU= approx 0.6W
 2.2-Channel Relay= 0.25W
-3.Solenoid Valve= Approx 18W
+3. Solenoid Valve= Approx 18W
 
 Total Consumption= [(18+0.6+0.45)*1.2]=22.6w
 
 Since valve requires 12v to operate by default,
 total current output required =(22.62/12)=approx 2A
 
-Hence Adapter Selected is 12V,2A Adapter.
+Hence Adapter Selected is a 12V,2A Adapter.
 
+
+Flow calculations-
+1.  Q = m^3/h Flow
+2. Δp = bar   Pressure drop(differential pressure between inlet and outlet) 
+3.  p = Kg/dm^3 Relative density referred to water.
+4. Kv = m^3/h Flow coefficient 
+
+Flow Q = Kv sqrt(Δp/p) 
+Since the flow rate is dependent on the pressure of the water supply it has to
+be calculated separately for each installation.   
 
