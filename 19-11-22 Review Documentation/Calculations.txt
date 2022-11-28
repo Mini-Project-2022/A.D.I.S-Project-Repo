@@ -1,0 +1,30 @@
+Battery Calculations:
+
+Consumption-
+1.Node MCU= 80mA/h
+2.Soil Moisture sensor=approx 20mA/h
+
+Total consumption=(80+25)mA/h=approx 100mA/h
+
+Total Consumption(with safety factor of 1.2x)=120ma/h
+
+Average Capacity of unit AA Battery=800mA/h
+Capacity of 4xAA Batteries=(800*4)mA/h=3200mA/h
+
+Estimated Runtime of sensing system=(3200/120)hrs= Approx 26 Hours 
+
+Adapter Sizing:
+
+Consumption-
+1.Node MCU= approx 0.6W
+2.2-Channel Relay= 0.25W
+3.Solenoid Valve= Approx 18W
+
+Total Consumption= [(18+0.6+0.45)*1.2]=22.6w
+
+Since valve requires 12v to operate by default,
+total current output required =(22.62/12)=approx 2A
+
+Hence Adapter Selected is 12V,2A Adapter.
+
+
