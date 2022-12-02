@@ -1,0 +1,69 @@
+<?php 
+header( "refresh:5" );
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<title> Automated Domestic Irrigation System </title>
+<link rel = "icon" href = "/public_html/adis-high-resolution-logo-color-on-transparent-background.ico" 
+        type = "image/x-icon">
+<style>
+html *
+{
+   font-family: Arial !important;
+   font-size: 5rem;
+}
+h1{ 
+    color:black;
+    font-size:72px;
+    text-align:center;
+    display:inline-block;
+    position:relative;
+    width:100%; /*Add this*/
+}
+h1 span{
+        border:10px solid white;
+        padding: .2em .5em; 
+    }
+</style
+
+</head>
+
+<body>
+<h1><span>A.D.I.S Interface</span></h1>
+<?php 
+$dbname = 'id19901913_irrigationdb';
+$dbuser = 'id19901913_team1db';  
+$dbpass = '!6fh\bbEbv1$ubhp'; 
+$dbhost = 'localhost'; 
+
+$connect = @mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+
+if(!$connect){
+	echo "Error: " . mysqli_connect_error();
+	exit();
+}
+$query2 = "SELECT moisture from Irrigation_DB";
+$row = mysqli_query($connect,$query2);
+
+while($data = $row->fetch_assoc()){
+    if($data["moisture"] >= 0){
+       echo "<h2 style='color:blue'>Moisture Level: ". $data["moisture"]." Percentage</h2>"; 
+    }
+}
+$query3 = "SELECT status from Irrigation_DB";
+$rows = mysqli_query($connect,$query3);
+
+while($state = $rows->fetch_assoc()){
+    
+    if( strcmp($state['status'],"0")  == 0){
+        echo "<h2 style='color:red'>Valve Status: OFF";
+    }else if( strcmp($state['status'],"1")  == 0 ){
+        echo "<h2 style='color:green'>Valve Status: ON";
+    }
+    echo "</h2>";
+}
+?> 
+</body>
+</html>
